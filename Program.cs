@@ -18,7 +18,7 @@ namespace PreventRestore
             bool retry = false;
             string? drive = null;
             do {
-                Console.Write("Enter drive letter to overwrite dead data to: ");
+                Console.Write("Enter drive letter to overwrite dead data: ");
                 drive = Console.ReadLine();
                 retry = !ValidateDriveInput(drive);
                 Console.WriteLine("");
