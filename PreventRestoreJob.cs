@@ -14,10 +14,10 @@ namespace PreventRestore
         readonly string? custom_path;
         bool started;
 
-        string OutputFile => Path.Combine(custom_path ?? drive.Name, "PREVENT_RESTORE_FILLER");
+        string OutputFile => 
+            Path.Combine(custom_path ?? drive.Name, "PREVENT_RESTORE_FILLER");
 
-        public PreventRestoreJob(char drive)
-        {
+        public PreventRestoreJob(char drive) {
             drive = char.ToUpper(drive);
             if (!char.IsLetter(drive)) throw new ArgumentException("Drive is invalid.", nameof(drive));
             if (!DriveInfo.GetDrives().Any(x => x.Name[0] == drive)) throw new ArgumentException("Drive does not exist.", nameof(drive));
@@ -25,8 +25,7 @@ namespace PreventRestore
             if (this.drive.Name[0] == 'C') custom_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
-        public void Start()
-        {
+        public void Start() {
             if (started) throw new Exception("Jobs cannot be re-used.");
             started = true;
 
@@ -39,10 +38,10 @@ namespace PreventRestore
                 using var fs = new FileStream(Path.Combine(OutputFile), FileMode.OpenOrCreate);
 
                 while (i < drive.TotalFreeSpace) {
-                    if (drive.TotalFreeSpace < write_buffer.Length)
-                    {
-                        fs.Write(RandomNumberGenerator.GetBytes((int)drive.TotalFreeSpace));
-                        i += drive.TotalFreeSpace;
+                    if (drive.TotalFreeSpace < write_buffer.Length) {
+                        var remainder_write_buffer = RandomNumberGenerator.GetBytes((int)drive.TotalFreeSpace);
+                        fs.Write(remainder_write_buffer);
+                        i += remainder_write_buffer.LongLength;
                     }
                     else {
                         RandomNumberGenerator.Fill(write_buffer);
@@ -52,8 +51,7 @@ namespace PreventRestore
                 }
             });
 
-            while (!task.IsCompleted)
-            {
+            while (!task.IsCompleted) {
                 output.Update(i);
                 Thread.Sleep(5000);
             }

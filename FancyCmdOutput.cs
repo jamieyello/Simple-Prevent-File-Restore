@@ -14,13 +14,11 @@ namespace PreventRestore
         long? last_progress;
         const char BLOCK = '■';
 
-        public FancyCmdOutput(long target_size_bytes)
-        {
+        public FancyCmdOutput(long target_size_bytes) {
             this.target_size_bytes = target_size_bytes;
         }
 
-        public void Update(long progress_bytes)
-        {
+        public void Update(long progress_bytes) {
             var elapsed = last_updated == null ? null : DateTime.Now - last_updated;
             var elapsed_bytes = last_progress == null ? null : progress_bytes - last_progress;
             var bps = elapsed_bytes == null || elapsed == null ? null : elapsed_bytes / elapsed.Value.TotalSeconds;
@@ -29,24 +27,20 @@ namespace PreventRestore
 
             if (initiated) Console.CursorTop -= 4;
 
-            Console.WriteLine($"{(bps == null ? "-" : (long)BytesToMegabytes((long)bps.Value))}MB/s".PadRight(50, ' '));
-            Console.WriteLine($"{(long)BytesToMegabytes(progress_bytes)}MB / {(long)BytesToMegabytes(target_size_bytes)}MB".PadRight(50, ' '));
-            Console.WriteLine($"{$"{progress_bytes * 100 / target_size_bytes}%",-4}{GetProgressBar(progress_bytes, target_size_bytes, 45)}".PadRight(50, ' '));
-            Console.WriteLine($"Estimated time remaining: {(eta == null ? "-" : $"{(long)eta.Value.TotalHours} hours, {eta.Value.Minutes} minutes, {eta.Value.Seconds} seconds")}".PadRight(50, ' '));
+            Console.WriteLine($"{(bps == null ? "-" : (long)BytesToMegabytes((long)bps.Value))}MB/s".PadRight(60, ' '));
+            Console.WriteLine($"{(long)BytesToMegabytes(progress_bytes)}MB / {(long)BytesToMegabytes(target_size_bytes)}MB".PadRight(60, ' '));
+            Console.WriteLine($"{$"{progress_bytes * 100 / target_size_bytes}%",-4}{GetProgressBar(progress_bytes, target_size_bytes, 45)}".PadRight(60, ' '));
+            Console.WriteLine($"Estimated time remaining: {(eta == null ? "-" : $"{(long)eta.Value.TotalHours} hours, {eta.Value.Minutes} minutes, {eta.Value.Seconds} seconds")}".PadRight(60, ' '));
 
             last_updated = DateTime.Now;
             last_progress = progress_bytes;
             initiated = true;
         }
 
-        static string GetProgressBar(long count, long target, int length)
-        {
-            var sb = new StringBuilder();
+        static string GetProgressBar(long count, long target, int length) {
             var progress = (decimal)count / target;
             var blocks = (int)Math.Round(progress * length);
-
             var result = string.Join("", Enumerable.Range(0, blocks).Select(x => BLOCK)).PadRight(length, '-');
-
             return result;
         }
 
