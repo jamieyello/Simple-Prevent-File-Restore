@@ -3,6 +3,8 @@ A simple file restore prevention tool that securely wipes data using cryptograph
 
 Windows is the only supported platform currently. Other OS's can be added easily.
 
+<img width="635" alt="image" src="https://github.com/jamieyello/Simple-Prevent-File-Restore/assets/10054829/b24db2a6-ac8c-4f45-80c9-ab7b4c18bf86">
+
 ## Why?
 When an OS deletes a file, it's typically not deleted fully. It's space is just marked as available to use, and any data will remain there until another file overwrites it. This can lead to data theft. For example, say you discard your old hard drive you no longer want. If thrown into the trash or recycled, it will very likely be picked out, where anyone down the line will have full access to anything that was on that drive.
 
