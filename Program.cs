@@ -10,7 +10,7 @@ namespace PreventRestore
         }
 
         static void InitiateFromPrompt() {
-            Console.WriteLine("Prevent restore utility. Detected drives;");
+            Console.WriteLine("Simple prevent restore utility. Detected drives;");
             Console.WriteLine("");
             foreach (var d in DriveInfo.GetDrives()) Console.WriteLine(d.Name);
             Console.WriteLine("");
@@ -27,6 +27,7 @@ namespace PreventRestore
 
             var job = new PreventRestoreJob(drive[0]);
             job.Start();
+            Console.ReadLine();
         }
 
         static bool ValidateDriveInput(string? drive) {

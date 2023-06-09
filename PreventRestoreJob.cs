@@ -37,7 +37,7 @@ namespace PreventRestore
             using var task = Task.Run(() => { 
                 using var fs = new FileStream(Path.Combine(OutputFile), FileMode.OpenOrCreate);
 
-                while (i < drive.TotalFreeSpace) {
+                while (drive.TotalFreeSpace > 0) {
                     if (drive.TotalFreeSpace < write_buffer.Length) {
                         var remainder_write_buffer = RandomNumberGenerator.GetBytes((int)drive.TotalFreeSpace);
                         fs.Write(remainder_write_buffer);
@@ -53,9 +53,11 @@ namespace PreventRestore
 
             while (!task.IsCompleted) {
                 output.Update(i);
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
             }
+            output.Update(i);
 
+            Console.WriteLine();
             if (task.IsFaulted && task.Exception != null) Console.WriteLine($"Error thrown: {task.Exception.Message}");
             else Console.WriteLine("Done.");
             if (File.Exists(OutputFile)) File.Delete(OutputFile);
