@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PreventRestore": {
+      "commandName": "Project",
+      "commandLineArgs": "-h -i 3 -d d"
+    }
+  }
+}
