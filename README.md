@@ -1,5 +1,5 @@
 # Simple Prevent File Restore
-A simple file restore prevention tool that securely wipes data using cryptographically random data.
+A simple file restore prevention tool that permanently securely wipes deleted files using cryptographically random data, preventing file recovery tools from finding anything.
 
 Windows is the only supported platform currently. Other OS's can be added easily.
 
