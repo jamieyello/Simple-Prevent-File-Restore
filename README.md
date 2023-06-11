@@ -15,3 +15,6 @@ The code is made as simple as possible for better transparency.
 
 ## How should I use it?
 While a hard drive has virtually unlimited read/write cycles, an SSD only has about 100,000 in total. Keep this in mind regarding how often you use this tool.
+
+## How do I use it?
+Run the exe without any arguments and follow the prompts, or use the `--help` command to see you options.
